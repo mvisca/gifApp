@@ -4,6 +4,8 @@
   <hr class="text-white">
   
   <div class="list-group list-reset">
-    <a class="list-group-item list-group-item-action" href="#">Dashboard</a>
+    <a *ngFor="let busqueda of historial;"
+    class="list-group-item list-group-item-action"
+    href="#"> {{ busqueda }} </a>
   </div>
 </div>

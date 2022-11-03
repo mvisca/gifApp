@@ -1,3 +1,21 @@
-<div class="col">
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur qui, natus incidunt voluptates, assumenda expedita, numquam veritatis ipsam officia rem eaque dolor culpa unde alias. Ipsum aliquam harum eius beatae?
+<div class="row">
+  <div *ngFor="let gif of resultados"
+    class="col col-md-4 col-sm-6">
+  
+    <div class="card mb-4">
+      <div 
+        class="card-imag-top"
+        style=
+          "background-image:
+            url('{{ gif.images.downsized_medium.url }}');
+          overflow: clip;
+          height: 180px;" >
+      </div>
+      <div class="card-body">
+        <p class="card-text" style="text-transform: capitalize;">
+          {{ gif.title | slice:0:22 }}
+        </p>      
+      </div>
+    </div>
+  
 </div>

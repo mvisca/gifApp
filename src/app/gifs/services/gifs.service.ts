@@ -25,7 +25,6 @@ export class GifsService {
     return [...this._historial];
   }
   
-  
   constructor( private http: HttpClient ) {
     this._historial = JSON.parse(localStorage.getItem( 'historial' )! ) || [];
     this.resultados = JSON.parse(localStorage.getItem( 'resultados' )! ) || [];
@@ -34,6 +33,8 @@ export class GifsService {
   
   
   gifsBuscados( busqueda: string ) {
+    console.log('searching....');
+    
     if( !this._historial.includes( busqueda ) ) {
       this._historial.unshift( busqueda );
       this._historial = this._historial.splice(0, 9);

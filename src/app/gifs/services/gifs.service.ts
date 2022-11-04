@@ -28,6 +28,8 @@ export class GifsService {
   
   constructor( private http: HttpClient ) {
     this._historial = JSON.parse(localStorage.getItem( 'historial' )! ) || [];
+    this.resultados = JSON.parse(localStorage.getItem( 'resultados' )! ) || [];
+    
   }
   
   

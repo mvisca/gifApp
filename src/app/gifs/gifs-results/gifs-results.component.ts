@@ -11,7 +11,5 @@ get resultados() {
   return this.gifsServices.resultados;
 }
   
-constructor( private gifsServices: GifsService ) {
-  this.gifsServices.resultados = JSON.parse(localStorage.getItem( 'resultados' )!) || []; 
-  }
+constructor( private gifsServices: GifsService ) {}
 }

@@ -7,11 +7,18 @@ import { Gif, SearchGifsResponse } from '../interfaces/searchGifsResponse.interf
   providedIn: 'root'
 })
 export class GifsService {
-
-  private apiKey : string = 'bxxemLAg77cTg86RONWAoGkW0NFzWiQt';
   
+  // Api request string maker
+  private _giphyUrl: string = 'https://api.giphy.com/v1/gifs/search?api_key=';
+
+  private _apiKey: string = 'bxxemLAg77cTg86RONWAoGkW0NFzWiQt';
+  
+  private _apiParams: string = '&limit=10&lang=es';
+  
+  // Search history array
   private _historial: string[] = [];
   
+  // Search results array
   public resultados: Gif[] = [];
   
   get historial(): string[] {
@@ -19,25 +26,22 @@ export class GifsService {
   }
   
   
-  constructor( private http: HttpClient ) {}
+  constructor( private http: HttpClient ) {
+    this._historial = JSON.parse(localStorage.getItem( 'historial' )! ) || [];
+  }
   
   
   gifsBuscados( busqueda: string ) {
-    // Si hay 'busqueda' y si la busqueda no está en el historial, agrega al historial.
-    if ( busqueda.trim().length !== 0 &&
-      !this._historial.includes( busqueda.toLowerCase() )
-    ) {
-      this._historial.unshift( busqueda.toLowerCase() );
-    // Mantiene el array en 10 entradas
-    } 
-    if ( this._historial.length > 10 ) {
-      this._historial.pop()
+    if( !this._historial.includes( busqueda ) ) {
+      this._historial.unshift( busqueda );
+      this._historial = this._historial.splice(0, 9);
+      
+      localStorage.setItem( 'historial', JSON.stringify( this._historial ) );
     }
-  
-    this.http.get<SearchGifsResponse>(`https://api.giphy.com/v1/gifs/search?api_key=bxxemLAg77cTg86RONWAoGkW0NFzWiQt&q=${busqueda}&limit=10&lang=es`)
+    
+    this.http.get<SearchGifsResponse>(`${this._giphyUrl}${this._apiKey}&q=${busqueda}${this._apiParams}`)
     .subscribe( ( resp ) => {
       this.resultados = resp.data;
-      console.log(this.resultados);      
     })
   } 
 }
